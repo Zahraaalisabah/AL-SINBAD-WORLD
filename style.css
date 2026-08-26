@@ -1476,4 +1476,193 @@ background:#fff;
 border-radius:50%;
 box-shadow:0 8px 20px rgba(0,0,0,.08);
 }
+/* ==========================================
+   إصلاحات الاستجابة الشاملة (Responsive Fixes)
+   ========================================== */
 
+/* ------------------------------------------
+   1. الشاشات الكبيرة والتابلت (Desktop & Large Tablets / 1200px - 992px)
+   ------------------------------------------ */
+@media (max-width: 1200px) {
+  .features .container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .feature:nth-child(3) {
+    border-left: none;
+  }
+  .printing-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .promo-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  /* تعديل الهيدر والبحث */
+  .header {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  .logo {
+    justify-content: center;
+  }
+  .search {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* تعديل الميزات والشريط السفلي */
+  .features .container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .feature {
+    border-left: none;
+    border-bottom: 1px solid #eee;
+  }
+
+  .why-box {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .printing-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ------------------------------------------
+   2. الأجهزة اللوحية والهواتف الكبيرة (Tablets & Mobile / 768px)
+   ------------------------------------------ */
+@media (max-width: 768px) {
+  /* الشريط العلوي Top Bar */
+  .top-container {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+
+  /* أيقونات الهيدر */
+  .header-icons {
+    justify-content: center;
+    gap: 20px;
+  }
+
+  /* القائمة (Nav) */
+  nav .container {
+    padding: 10px;
+  }
+  nav ul {
+    gap: 5px;
+  }
+  nav li a {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  /* سلايدر الهيرو */
+  .heroSwiper, .hero-slide {
+    height: 280px;
+  }
+  .hero-text {
+    left: 5%;
+    right: 5%;
+    max-width: 100%;
+    text-align: center;
+  }
+  .hero-text h1 {
+    font-size: 32px;
+  }
+  .hero-text p {
+    font-size: 16px;
+  }
+
+  /* الأقسام الشبكية */
+  .popular-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .printing-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .promo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .why-box {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .why-item {
+    flex-direction: column;
+  }
+
+  /* العناوين */
+  .section-title h2 {
+    font-size: 22px;
+  }
+  .full-banner h2 {
+    font-size: 28px;
+  }
+}
+
+/* ------------------------------------------
+   3. الهواتف الذكية والصغيرة (Small Mobile / 480px)
+   ------------------------------------------ */
+@media (max-width: 480px) {
+  .logo h2 {
+    font-size: 32px;
+  }
+  .logo p {
+    font-size: 15px;
+  }
+  .logo img {
+    width: 70px;
+  }
+
+  .search input {
+    padding: 0 15px;
+    font-size: 13px;
+  }
+
+  .heroSwiper, .hero-slide {
+    height: 240px;
+  }
+  .hero-text h1 {
+    font-size: 24px;
+  }
+  .hero-text p {
+    font-size: 13px;
+    margin-bottom: 15px;
+  }
+  .hero-btn {
+    padding: 8px 20px;
+    font-size: 13px;
+  }
+
+  .features .container {
+    grid-template-columns: 1fr;
+  }
+
+  .popular-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .printing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-contact {
+    grid-template-columns: 1fr;
+  }
+}
