@@ -102,7 +102,7 @@ Header
 ==============================*/
 header{
 background:#fff;
-padding:20px 0;
+padding: 8px 0 !important;
 }
 
 .header{
@@ -115,29 +115,29 @@ gap:40px;
 .logo{
 display:flex;
 align-items:center;
-gap:18px;
+gap: 10px !important;    
 }
 
 .logo img{
-width:95px;
+width: 50px !important; /* تقليل حجم اللوجو */
 }
 
 .logo h2{
-font-size:46px;
-font-weight:900;
+font-size: 26px !important; /* تصغير حجم خط العنوان */
+    font-weight:900;
 color:var(--primary);
 line-height:1;
 }
 
 .logo p{
-font-size:19px;
-font-weight:bold;
+font-size: 13px !important;
+    font-weight:bold;
 color:var(--secondary);
 }
 
 .logo small{
 color:var(--orange-dark);
-font-size:15px;
+font-size: 11px !important;
 }
 
 /*==============================
@@ -146,28 +146,27 @@ Search
 .search{
 flex:1;
 display:flex;
-max-width:700px;
-height:58px;
+height: 40px !important; /* جعل البحث أنحف */
+  max-width: 500px !important;
 }
 
 .search input{
 width:100%;
 border:1px solid #ddd;
 border-right:none;
-padding:0 25px;
-font-size:15px;
+padding: 0 15px !important;
+  font-size: 13px !important;
 border-radius:35px 0 0 35px;
 outline:none;
 }
 
 .search button{
-width:60px;
-background:var(--primary);
+width: 45px !important;
+  font-size: 15px !important;background:var(--primary);
 color:#fff;
 border:none;
 border-radius:0 35px 35px 0;
 cursor:pointer;
-font-size:18px;
 transition:var(--transition);
 }
 
@@ -180,7 +179,7 @@ Header Icons
 ==============================*/
 .header-icons{
 display:flex;
-gap:35px;
+gap: 20px !important;
 }
 
 .header-icons a{
@@ -189,8 +188,8 @@ flex-direction:column;
 align-items:center;
 color:var(--secondary);
 position:relative;
-font-size:14px;
-transition:var(--transition);
+font-size: 12px !important;
+    transition:var(--transition);
 }
 
 .header-icons a:hover{
@@ -198,8 +197,8 @@ color:var(--primary);
 }
 
 .header-icons i{
-font-size:28px;
-margin-bottom:8px;
+font-size: 20px !important;
+  margin-bottom: 2px !important;
 }
 
 .cart{
@@ -224,6 +223,11 @@ justify-content:center;
 .cart small{
 margin-top:8px;
 font-size:14px;
+}
+@media (max-width: 992px) {
+  .header {
+    gap: 10px !important;
+  }
 }
 
 /*==============================
