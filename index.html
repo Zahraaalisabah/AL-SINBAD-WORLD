@@ -1104,5 +1104,65 @@ loading="lazy">
 
 <script src="main.js"></script>
 
+
+
+
+
+
+
+
+
+
+
+
+<!-- زر الفتح بالـ Header أو الـ Footer -->
+<div style="text-align: center; margin: 20px 0;">
+  <button id="openAdminLoginBtn" class="admin-trigger-btn">
+    <i class="fa-solid fa-lock"></i> لوحة إدارة المنتجات (خاص بالمشرف)
+  </button>
+</div>
+
+<!-- Modal 1: نافذة تسجيل الدخول -->
+<div id="loginModal" class="admin-modal">
+  <div class="admin-modal-content">
+    <span class="close-modal" onclick="closeAdminModal('loginModal')">&times;</span>
+    <div class="modal-icon"><i class="fa-solid fa-user-shield"></i></div>
+    <h3>تسجيل دخول المشرف</h3>
+    <p>أدخل كلمة السر الخاصة بإدارة المتجر لتتمكن من إضافة أو تعديل المنتجات.</p>
+    <form id="adminLoginForm">
+      <input type="password" id="adminPassword" placeholder="أدخل كلمة السر" required>
+      <button type="submit" class="btn-gold">دخول اللوحة</button>
+    </form>
+  </div>
+</div>
+
+<!-- Modal 2: نافذة إضافة منتج جديد -->
+<div id="addProductModal" class="admin-modal">
+  <div class="admin-modal-content">
+    <span class="close-modal" onclick="closeAdminModal('addProductModal')">&times;</span>
+    <button type="button" class="btn-logout" id="adminLogoutBtn"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
+    <h3><i class="fa-solid fa-circle-plus"></i> إضافة منتج جديد</h3>
+    
+    <form id="popAddProductForm">
+      <div class="form-group">
+        <label>اسم المنتج:</label>
+        <input type="text" id="popTitle" placeholder="مثال: مطحنة قهوة يدوية" required>
+      </div>
+
+      <div class="form-group">
+        <label>القسم:</label>
+        <select id="popCategory" required></select>
+      </div>
+
+      <div class="form-group">
+        <label>اختر صورة المنتج من الموبايل:</label>
+        <input type="file" id="popImage" accept="image/*" required>
+      </div>
+
+      <button type="submit" class="btn-gold"><i class="fa-solid fa-check"></i> حفظ ونشر المنتج</button>
+    </form>
+  </div>
+</div>
+
 </body>
 </html>
