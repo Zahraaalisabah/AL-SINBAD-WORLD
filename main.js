@@ -116,3 +116,36 @@ searchInput.addEventListener("input", () => {
 
 
 
+
+// جلب وعرض المنتجات الديناميكية من Supabase
+async function fetchAndRenderProducts() {
+    const { data: products, error } = await supabaseClient
+        .from('products')
+        .select('*');
+
+    if (error) {
+        console.error("خطأ في جلب المنتجات:", error);
+        return;
+    }
+
+    products.forEach(product => {
+        const categoryContainer = document.querySelector(`#${product.category} .products-grid`);
+        if (categoryContainer) {
+            const productHTML = `
+                <div class="product-card" data-id="${product.id}">
+                    <img src="${product.image_url}" alt="${product.title}">
+                    <h3>${product.title}</h3>
+                    <a href="https://wa.me/9647702901247?text=السلام عليكم، أريد طلب ${encodeURIComponent(product.title)}" target="_blank" class="btn-small">
+                        <i class="fab fa-whatsapp"></i> اطلب الآن
+                    </a>
+                </div>
+            `;
+            categoryContainer.insertAdjacentHTML('beforeend', productHTML);
+        }
+    });
+}
+
+// تشغيل الدالة عند تحميل الصفحة
+document.addEventListener("DOMContentLoaded", fetchAndRenderProducts);
+
+
