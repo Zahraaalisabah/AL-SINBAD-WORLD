@@ -1,3 +1,11 @@
+const SUPABASE_URL = "https://oolthhsdewchdkuojahl.supabase.co";
+
+const SUPABASE_KEY = "sb_publishable_K9MBG_wuPlWY25Lv5lEpJQ_wph27Xs";
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 // ==============================
 // AOS Animation Init
 // ==============================
