@@ -311,3 +311,100 @@ document.addEventListener(
     "DOMContentLoaded",
     fetchAndRenderProducts
 );
+
+
+
+
+
+
+
+
+// غيّر كلمة السر هنا
+const ADMIN_PASSWORD = "123"; 
+
+const loginModal = document.getElementById("loginModal");
+const addProductModal = document.getElementById("addProductModal");
+
+// فتح نافذة كلمة السر
+document.getElementById("openAdminLoginBtn").addEventListener("click", () => {
+  loginModal.style.display = "block";
+});
+
+// إغلاق النوافذ
+function closeAdminModal(id) {
+  document.getElementById(id).style.display = "none";
+}
+
+// التحقق من كلمة السر
+document.getElementById("adminLoginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const pwd = document.getElementById("adminPassword").value;
+
+  if (pwd === ADMIN_PASSWORD) {
+    loginModal.style.display = "none";
+    document.getElementById("adminPassword").value = "";
+    
+    // جلب الأقسام قبل فتح اللوحة
+    await loadModalCategories();
+    addProductModal.style.display = "block";
+  } else {
+    alert("كلمة السر غير صحيحة!");
+  }
+});
+
+// تسجيل الخروج
+document.getElementById("adminLogoutBtn").addEventListener("click", () => {
+  addProductModal.style.display = "none";
+});
+
+// جلب التصنيفات إلى القائمة المنسدلة
+async function loadModalCategories() {
+  const { data: categories } = await supabaseClient.from("categories").select("*");
+  const select = document.getElementById("popCategory");
+  select.innerHTML = "";
+
+  categories.forEach(cat => {
+    const opt = document.createElement("option");
+    opt.value = cat.id;
+    opt.textContent = cat.name;
+    select.appendChild(opt);
+  });
+}
+
+// رفع الصور والحفظ بـ Supabase
+document.getElementById("popAddProductForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const title = document.getElementById("popTitle").value;
+  const categoryId = document.getElementById("popCategory").value;
+  const file = document.getElementById("popImage").files[0];
+
+  if (!file) return alert("يرجى اختيار صورة");
+
+  const fileName = `${Date.now()}_${file.name}`;
+  
+  // 1. رفع الصورة إلى Storage
+  const { error: uploadError } = await supabaseClient.storage
+    .from("product-images")
+    .upload(fileName, file);
+
+  if (uploadError) return alert("خطأ أثناء رفع الصورة!");
+
+  // 2. جلب رابط الصورة
+  const { data: publicUrlData } = supabaseClient.storage
+    .from("product-images")
+    .getPublicUrl(fileName);
+
+  // 3. إضافة المنتج
+  const { error: insertError } = await supabaseClient.from("products").insert([
+    { title: title, category_id: categoryId, image_url: publicUrlData.publicUrl }
+  ]);
+
+  if (!insertError) {
+    alert("تم نشر المنتج بنجاح!");
+    addProductModal.style.display = "none";
+    location.reload();
+  } else {
+    alert("حدث خطأ في الحفظ!");
+  }
+});
