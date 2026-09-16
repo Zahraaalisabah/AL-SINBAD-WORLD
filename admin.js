@@ -1,3 +1,15 @@
+// حماية بسيطة لصفحة الأدمن
+const ADMIN_PASSWORD = "123"; // استبدلها بكلمة المرور الخاصة بك
+
+if (sessionStorage.getItem("isAdmin") !== "true") {
+    const password = prompt("أدخل كلمة المرور لدخول لوحة التحكم:");
+    if (password === ADMIN_PASSWORD) {
+        sessionStorage.setItem("isAdmin", "true");
+    } else {
+        alert("كلمة المرور غير صحيحة!");
+        window.location.href = "index.html";
+    }
+}
 const SUPABASE_URL = "https://oolthhsdewchdkuojahl.supabase.co";
 const SUPABASE_KEY = "sb_publishable_K9MBG_wuPlWY25Lv5lEpJQ_wph27Xs";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
