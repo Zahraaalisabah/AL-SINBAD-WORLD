@@ -743,7 +743,7 @@ if (popAddProductForm) {
                     error: uploadError
                 } = await supabaseClient.storage
 
-                    .from("product-images")
+                    .from("products")
 
                     .upload(
                         fileName,
@@ -776,7 +776,7 @@ if (popAddProductForm) {
                     data: publicUrlData
                 } = supabaseClient.storage
 
-                    .from("product-images")
+                    .from("products")
 
                     .getPublicUrl(
                         fileName
