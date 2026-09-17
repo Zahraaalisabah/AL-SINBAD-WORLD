@@ -1,14 +1,23 @@
-// ==============================
+```js
+// ======================================================
+// AL SINBAD WORLD - MAIN.JS
+// ======================================================
+
+
+// ======================================================
 // AOS Animation Init
-// ==============================
+// ======================================================
+
 AOS.init({
     duration: 800,
     once: true
 });
 
-// ==============================
-// Hero Swiper (Slider)
-// ==============================
+
+// ======================================================
+// Hero Swiper
+// ======================================================
+
 const heroSwiper = new Swiper(".heroSwiper", {
 
     loop: true,
@@ -33,36 +42,52 @@ const heroSwiper = new Swiper(".heroSwiper", {
 });
 
 
-// ==============================
+// ======================================================
 // Back To Top Button
-// ==============================
+// ======================================================
+
 const topBtn = document.getElementById("topBtn");
 
 window.addEventListener("scroll", () => {
 
-    if (window.scrollY > 400) {
-        topBtn.style.display = "block";
-    } else {
-        topBtn.style.display = "none";
+    if (topBtn) {
+
+        if (window.scrollY > 400) {
+            topBtn.style.display = "block";
+        } else {
+            topBtn.style.display = "none";
+        }
+
     }
 
-    // Header shadow on scroll
+
+    // Header shadow
+
     const header = document.querySelector("header");
 
     if (header) {
+
         if (window.scrollY > 100) {
-            header.style.boxShadow = "0 10px 30px rgba(0,0,0,.15)";
+
+            header.style.boxShadow =
+                "0 10px 30px rgba(0,0,0,.15)";
+
         } else {
-            header.style.boxShadow = "0 10px 30px rgba(0,0,0,.08)";
+
+            header.style.boxShadow =
+                "0 10px 30px rgba(0,0,0,.08)";
+
         }
+
     }
 
 });
 
 
-// ==============================
-// Scroll to top
-// ==============================
+// ======================================================
+// Scroll To Top
+// ======================================================
+
 if (topBtn) {
 
     topBtn.addEventListener("click", () => {
@@ -77,26 +102,32 @@ if (topBtn) {
 }
 
 
-// ==============================
-// Smooth scroll for nav links
-// ==============================
+// ======================================================
+// Smooth Scroll For Navigation
+// ======================================================
+
 document.querySelectorAll("nav ul li a").forEach(link => {
 
     link.addEventListener("click", function (e) {
 
-        const target = this.getAttribute("href");
+        const target =
+            this.getAttribute("href");
 
         if (target && target.startsWith("#")) {
 
             e.preventDefault();
 
-            const section = document.querySelector(target);
+            const section =
+                document.querySelector(target);
 
             if (section) {
 
                 window.scrollTo({
+
                     top: section.offsetTop - 80,
+
                     behavior: "smooth"
+
                 });
 
             }
@@ -108,36 +139,55 @@ document.querySelectorAll("nav ul li a").forEach(link => {
 });
 
 
-// ==============================
+// ======================================================
 // Search
-// ==============================
-if (typeof searchInput !== "undefined" && searchInput) {
+// ======================================================
+
+const searchInput =
+    document.getElementById("searchInput");
+
+
+if (searchInput) {
 
     searchInput.addEventListener("input", () => {
 
-        const value = searchInput.value.trim().toLowerCase();
-
-        document.querySelectorAll(".product-card").forEach(product => {
-
-            const titleElement = product.querySelector("h3");
-
-            if (!titleElement) return;
-
-            const title = titleElement.textContent
+        const value =
+            searchInput.value
                 .trim()
                 .toLowerCase();
 
-            if (title.includes(value) || value === "") {
 
-                product.style.display = "block";
+        document
+            .querySelectorAll(".product-card")
+            .forEach(product => {
 
-            } else {
+                const titleElement =
+                    product.querySelector("h3");
 
-                product.style.display = "none";
 
-            }
+                if (!titleElement) return;
 
-        });
+
+                const title =
+                    titleElement.textContent
+                        .trim()
+                        .toLowerCase();
+
+
+                if (
+                    title.includes(value) ||
+                    value === ""
+                ) {
+
+                    product.style.display = "block";
+
+                } else {
+
+                    product.style.display = "none";
+
+                }
+
+            });
 
     });
 
@@ -145,14 +195,17 @@ if (typeof searchInput !== "undefined" && searchInput) {
 
 
 // ======================================================
-// جلب وعرض المنتجات من Supabase
-// مع جلب التصنيف المرتبط بكل منتج
+// Fetch Products From Supabase
 // ======================================================
+
 async function fetchAndRenderProducts() {
 
     try {
 
-        const { data: products, error } = await supabaseClient
+        const {
+            data: products,
+            error
+        } = await supabaseClient
 
             .from("products")
 
@@ -170,9 +223,10 @@ async function fetchAndRenderProducts() {
             });
 
 
-        // ==============================
-        // في حالة وجود خطأ
-        // ==============================
+        // ==================================================
+        // Error
+        // ==================================================
+
         if (error) {
 
             console.error(
@@ -181,31 +235,43 @@ async function fetchAndRenderProducts() {
             );
 
             return;
+
         }
 
 
-        // ==============================
-        // إذا ماكو منتجات
-        // ==============================
-        if (!products || products.length === 0) {
+        // ==================================================
+        // No Products
+        // ==================================================
 
-            console.log("لا توجد منتجات حاليًا.");
+        if (
+            !products ||
+            products.length === 0
+        ) {
+
+            console.log(
+                "لا توجد منتجات حاليًا."
+            );
 
             return;
+
         }
 
 
-        // ==============================
-        // عرض المنتجات
-        // ==============================
+        // ==================================================
+        // Render Products
+        // ==================================================
+
         products.forEach(product => {
 
 
-            // التصنيف المرتبط بالمنتج
-            const category = product.categories;
+            // التصنيف
+
+            const category =
+                product.categories;
 
 
-            // إذا المنتج ما عنده تصنيف
+            // إذا ماكو تصنيف
+
             if (!category) {
 
                 console.warn(
@@ -214,21 +280,24 @@ async function fetchAndRenderProducts() {
                 );
 
                 return;
+
             }
 
 
-            // نستخدم slug حتى نحدد القسم بالـ HTML
-            const categorySlug = category.slug;
+            const categorySlug =
+                category.slug;
 
 
-            // البحث عن قسم التصنيف
+            // ==================================================
+            // البحث عن القسم
+            // ==================================================
+
             const categoryContainer =
                 document.querySelector(
                     `#${categorySlug} .products-grid`
                 );
 
 
-            // إذا القسم غير موجود بالـ HTML
             if (!categoryContainer) {
 
                 console.warn(
@@ -236,12 +305,14 @@ async function fetchAndRenderProducts() {
                 );
 
                 return;
+
             }
 
 
-            // ==============================
+            // ==================================================
             // إنشاء بطاقة المنتج
-            // ==============================
+            // ==================================================
+
             const productHTML = `
 
                 <div
@@ -278,7 +349,10 @@ async function fetchAndRenderProducts() {
             `;
 
 
-            // إضافة المنتج للقسم المناسب
+            // ==================================================
+            // إضافة البطاقة
+            // ==================================================
+
             categoryContainer.insertAdjacentHTML(
                 "beforeend",
                 productHTML
@@ -291,10 +365,11 @@ async function fetchAndRenderProducts() {
             `تم تحميل ${products.length} منتج بنجاح`
         );
 
+
     } catch (err) {
 
         console.error(
-            "حدث خطأ غير متوقع:",
+            "حدث خطأ غير متوقع أثناء تحميل المنتجات:",
             err
         );
 
@@ -304,8 +379,9 @@ async function fetchAndRenderProducts() {
 
 
 // ======================================================
-// تشغيل جلب المنتجات عند تحميل الصفحة
+// Run Products Fetch
 // ======================================================
+
 document.addEventListener(
     "DOMContentLoaded",
     fetchAndRenderProducts
@@ -313,97 +389,618 @@ document.addEventListener(
 
 
 
+// ======================================================
+// ADMIN PANEL
+// ======================================================
 
 
+// ======================================================
+// Admin Password
+// ======================================================
+
+const ADMIN_PASSWORD = "123";
 
 
+// ======================================================
+// Admin Elements
+// ======================================================
 
-// غيّر كلمة السر هنا
-const ADMIN_PASSWORD = "123"; 
+const loginModal =
+    document.getElementById("loginModal");
 
-const loginModal = document.getElementById("loginModal");
-const addProductModal = document.getElementById("addProductModal");
+const addProductModal =
+    document.getElementById("addProductModal");
 
-// فتح نافذة كلمة السر
-document.getElementById("openAdminLoginBtn").addEventListener("click", () => {
-  loginModal.style.display = "block";
-});
+const openAdminLoginBtn =
+    document.getElementById("openAdminLoginBtn");
 
-// إغلاق النوافذ
+const adminLoginForm =
+    document.getElementById("adminLoginForm");
+
+const adminLogoutBtn =
+    document.getElementById("adminLogoutBtn");
+
+const popAddProductForm =
+    document.getElementById("popAddProductForm");
+
+
+// ======================================================
+// Open Admin Login
+// ======================================================
+
+if (
+    openAdminLoginBtn &&
+    loginModal
+) {
+
+    openAdminLoginBtn.addEventListener(
+        "click",
+        () => {
+
+            loginModal.style.display = "block";
+
+        }
+    );
+
+}
+
+
+// ======================================================
+// Close Admin Modal
+// ======================================================
+
 function closeAdminModal(id) {
-  document.getElementById(id).style.display = "none";
+
+    const modal =
+        document.getElementById(id);
+
+
+    if (modal) {
+
+        modal.style.display = "none";
+
+    }
+
 }
 
-// التحقق من كلمة السر
-document.getElementById("adminLoginForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const pwd = document.getElementById("adminPassword").value;
 
-  if (pwd === ADMIN_PASSWORD) {
-    loginModal.style.display = "none";
-    document.getElementById("adminPassword").value = "";
-    
-    // جلب الأقسام قبل فتح اللوحة
-    await loadModalCategories();
-    addProductModal.style.display = "block";
-  } else {
-    alert("كلمة السر غير صحيحة!");
-  }
-});
+// ======================================================
+// Admin Login
+// ======================================================
 
-// تسجيل الخروج
-document.getElementById("adminLogoutBtn").addEventListener("click", () => {
-  addProductModal.style.display = "none";
-});
+if (adminLoginForm) {
 
-// جلب التصنيفات إلى القائمة المنسدلة
+    adminLoginForm.addEventListener(
+        "submit",
+        async (e) => {
+
+            e.preventDefault();
+
+
+            const passwordInput =
+                document.getElementById(
+                    "adminPassword"
+                );
+
+
+            if (!passwordInput) {
+
+                console.error(
+                    "adminPassword غير موجود"
+                );
+
+                return;
+
+            }
+
+
+            const password =
+                passwordInput.value;
+
+
+            // ==================================================
+            // Correct Password
+            // ==================================================
+
+            if (
+                password === ADMIN_PASSWORD
+            ) {
+
+                // إغلاق تسجيل الدخول
+
+                if (loginModal) {
+
+                    loginModal.style.display =
+                        "none";
+
+                }
+
+
+                passwordInput.value = "";
+
+
+                // تحميل الأقسام
+
+                await loadModalCategories();
+
+
+                // فتح لوحة الإدارة
+
+                if (addProductModal) {
+
+                    addProductModal.style.display =
+                        "block";
+
+                }
+
+            }
+
+
+            // ==================================================
+            // Wrong Password
+            // ==================================================
+
+            else {
+
+                alert(
+                    "كلمة السر غير صحيحة!"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+// ======================================================
+// Admin Logout
+// ======================================================
+
+if (adminLogoutBtn) {
+
+    adminLogoutBtn.addEventListener(
+        "click",
+        () => {
+
+            if (addProductModal) {
+
+                addProductModal.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+}
+
+
+// ======================================================
+// Load Categories
+// ======================================================
+
 async function loadModalCategories() {
-  const { data: categories } = await supabaseClient.from("categories").select("*");
-  const select = document.getElementById("popCategory");
-  select.innerHTML = "";
 
-  categories.forEach(cat => {
-    const opt = document.createElement("option");
-    opt.value = cat.id;
-    opt.textContent = cat.name;
-    select.appendChild(opt);
-  });
+    try {
+
+        const {
+            data: categories,
+            error
+        } = await supabaseClient
+
+            .from("categories")
+
+            .select("*")
+
+            .order("id", {
+                ascending: true
+            });
+
+
+        // ==================================================
+        // Error
+        // ==================================================
+
+        if (error) {
+
+            console.error(
+                "خطأ في تحميل الأقسام:",
+                error
+            );
+
+            alert(
+                "تعذر تحميل الأقسام."
+            );
+
+            return;
+
+        }
+
+
+        const select =
+            document.getElementById(
+                "popCategory"
+            );
+
+
+        if (!select) {
+
+            console.error(
+                "popCategory غير موجود في HTML"
+            );
+
+            return;
+
+        }
+
+
+        select.innerHTML = "";
+
+
+        // ==================================================
+        // No Categories
+        // ==================================================
+
+        if (
+            !categories ||
+            categories.length === 0
+        ) {
+
+            alert(
+                "لا توجد أقسام في قاعدة البيانات."
+            );
+
+            return;
+
+        }
+
+
+        // ==================================================
+        // Add Categories
+        // ==================================================
+
+        categories.forEach(cat => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                cat.id;
+
+
+            option.textContent =
+                cat.name;
+
+
+            select.appendChild(
+                option
+            );
+
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "Category Error:",
+            error
+        );
+
+        alert(
+            "حدث خطأ أثناء تحميل الأقسام."
+        );
+
+    }
+
 }
 
-// رفع الصور والحفظ بـ Supabase
-document.getElementById("popAddProductForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
 
-  const title = document.getElementById("popTitle").value;
-  const categoryId = document.getElementById("popCategory").value;
-  const file = document.getElementById("popImage").files[0];
+// ======================================================
+// Add Product
+// ======================================================
 
-  if (!file) return alert("يرجى اختيار صورة");
+if (popAddProductForm) {
 
-  const fileName = `${Date.now()}_${file.name}`;
-  
-  // 1. رفع الصورة إلى Storage
-  const { error: uploadError } = await supabaseClient.storage
-    .from("product-images")
-    .upload(fileName, file);
+    popAddProductForm.addEventListener(
+        "submit",
+        async (e) => {
 
-  if (uploadError) return alert("خطأ أثناء رفع الصورة!");
+            e.preventDefault();
 
-  // 2. جلب رابط الصورة
-  const { data: publicUrlData } = supabaseClient.storage
-    .from("product-images")
-    .getPublicUrl(fileName);
 
-  // 3. إضافة المنتج
-  const { error: insertError } = await supabaseClient.from("products").insert([
-    { title: title, category_id: categoryId, image_url: publicUrlData.publicUrl }
-  ]);
+            // ==================================================
+            // Get Values
+            // ==================================================
 
-  if (!insertError) {
-    alert("تم نشر المنتج بنجاح!");
-    addProductModal.style.display = "none";
-    location.reload();
-  } else {
-    alert("حدث خطأ في الحفظ!");
-  }
-});
+            const titleInput =
+                document.getElementById(
+                    "popTitle"
+                );
+
+
+            const categoryInput =
+                document.getElementById(
+                    "popCategory"
+                );
+
+
+            const imageInput =
+                document.getElementById(
+                    "popImage"
+                );
+
+
+            if (
+                !titleInput ||
+                !categoryInput ||
+                !imageInput
+            ) {
+
+                console.error(
+                    "أحد عناصر نموذج إضافة المنتج غير موجود."
+                );
+
+                return;
+
+            }
+
+
+            const title =
+                titleInput.value.trim();
+
+
+            const categoryId =
+                categoryInput.value;
+
+
+            const file =
+                imageInput.files[0];
+
+
+            // ==================================================
+            // Validation
+            // ==================================================
+
+            if (!title) {
+
+                alert(
+                    "يرجى كتابة اسم المنتج."
+                );
+
+                return;
+
+            }
+
+
+            if (!file) {
+
+                alert(
+                    "يرجى اختيار صورة المنتج."
+                );
+
+                return;
+
+            }
+
+
+            // ==================================================
+            // Submit Button
+            // ==================================================
+
+            const submitBtn =
+                popAddProductForm.querySelector(
+                    "button[type='submit']"
+                );
+
+
+            if (submitBtn) {
+
+                submitBtn.disabled = true;
+
+                submitBtn.innerHTML =
+                    '<i class="fa-solid fa-spinner fa-spin"></i> جاري النشر...';
+
+            }
+
+
+            try {
+
+                // ==================================================
+                // Image File Name
+                // ==================================================
+
+                const fileName =
+                    `${Date.now()}_${file.name}`;
+
+
+                // ==================================================
+                // Upload Image
+                // ==================================================
+
+                const {
+                    error: uploadError
+                } = await supabaseClient.storage
+
+                    .from("product-images")
+
+                    .upload(
+                        fileName,
+                        file
+                    );
+
+
+                if (uploadError) {
+
+                    console.error(
+                        "Upload Error:",
+                        uploadError
+                    );
+
+                    alert(
+                        "حدث خطأ أثناء رفع الصورة:\n" +
+                        uploadError.message
+                    );
+
+                    return;
+
+                }
+
+
+                // ==================================================
+                // Get Public URL
+                // ==================================================
+
+                const {
+                    data: publicUrlData
+                } = supabaseClient.storage
+
+                    .from("product-images")
+
+                    .getPublicUrl(
+                        fileName
+                    );
+
+
+                const imageUrl =
+                    publicUrlData.publicUrl;
+
+
+                // ==================================================
+                // Insert Product
+                // ==================================================
+
+                const {
+                    error: insertError
+                } = await supabaseClient
+
+                    .from("products")
+
+                    .insert([
+
+                        {
+                            title: title,
+
+                            category_id:
+                                categoryId,
+
+                            image_url:
+                                imageUrl
+                        }
+
+                    ]);
+
+
+                // ==================================================
+                // Insert Error
+                // ==================================================
+
+                if (insertError) {
+
+                    console.error(
+                        "Insert Error:",
+                        insertError
+                    );
+
+                    alert(
+                        "حدث خطأ أثناء حفظ المنتج:\n" +
+                        insertError.message
+                    );
+
+                    return;
+
+                }
+
+
+                // ==================================================
+                // Success
+                // ==================================================
+
+                alert(
+                    "تم نشر المنتج بنجاح ✅"
+                );
+
+
+                if (addProductModal) {
+
+                    addProductModal.style.display =
+                        "none";
+
+                }
+
+
+                popAddProductForm.reset();
+
+
+                // ==================================================
+                // Reload Page
+                // ==================================================
+
+                location.reload();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Unexpected Error:",
+                    error
+                );
+
+                alert(
+                    "حدث خطأ غير متوقع."
+                );
+
+
+            } finally {
+
+                if (submitBtn) {
+
+                    submitBtn.disabled = false;
+
+                    submitBtn.innerHTML =
+                        '<i class="fa-solid fa-check"></i> حفظ ونشر المنتج';
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+// ======================================================
+// Close Modal When Clicking Outside
+// ======================================================
+
+window.addEventListener(
+    "click",
+    (event) => {
+
+        if (
+            event.target === loginModal
+        ) {
+
+            loginModal.style.display =
+                "none";
+
+        }
+
+
+        if (
+            event.target === addProductModal
+        ) {
+
+            addProductModal.style.display =
+                "none";
+
+        }
+
+    }
+);
+```
