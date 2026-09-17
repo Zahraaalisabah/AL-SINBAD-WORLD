@@ -582,123 +582,40 @@ if (adminLogoutBtn) {
 // ======================================================
 
 async function loadModalCategories() {
-
     try {
-
-        const {
-            data: categories,
-            error
-        } = await supabaseClient
-
+        const { data: categories, error } = await supabaseClient
             .from("categories")
-
             .select("*")
-
-            .order("id", {
-                ascending: true
-            });
-
-
-        // ==================================================
-        // Error
-        // ==================================================
+            .order("id", { ascending: true });
 
         if (error) {
-
-            console.error(
-                "خطأ في تحميل الأقسام:",
-                error
-            );
-
-            alert(
-                "تعذر تحميل الأقسام."
-            );
-
+            console.error("تفاصيل خطأ تحميل الأقسام:", error);
+            alert("تعذر تحميل الأقسام: " + error.message);
             return;
-
         }
 
-
-        const select =
-            document.getElementById(
-                "popCategory"
-            );
-
-
-        if (!select) {
-
-            console.error(
-                "popCategory غير موجود في HTML"
-            );
-
-            return;
-
-        }
-
+        const select = document.getElementById("popCategory");
+        if (!select) return;
 
         select.innerHTML = "";
 
-
-        // ==================================================
-        // No Categories
-        // ==================================================
-
-        if (
-            !categories ||
-            categories.length === 0
-        ) {
-
-            alert(
-                "لا توجد أقسام في قاعدة البيانات."
-            );
-
+        if (!categories || categories.length === 0) {
+            alert("لا توجد أقسام في قاعدة البيانات.");
             return;
-
         }
 
-
-        // ==================================================
-        // Add Categories
-        // ==================================================
-
         categories.forEach(cat => {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-
-            option.value =
-                cat.id;
-
-
-            option.textContent =
-                cat.name;
-
-
-            select.appendChild(
-                option
-            );
-
+            const option = document.createElement("option");
+            option.value = cat.id;
+            option.textContent = cat.name;
+            select.appendChild(option);
         });
 
-
     } catch (error) {
-
-        console.error(
-            "Category Error:",
-            error
-        );
-
-        alert(
-            "حدث خطأ أثناء تحميل الأقسام."
-        );
-
+        console.error("Category Error:", error);
+        alert("حدث خطأ غير متوقع أثناء تحميل الأقسام.");
     }
-
 }
-
 
 // ======================================================
 // Add Product
