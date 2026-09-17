@@ -1158,9 +1158,38 @@ loading="lazy">
   </div>
 </div>
 
+<!-- ============================= -->
+<!-- Libraries -->
+<!-- ============================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+
+<!-- ============================= -->
+<!-- Supabase -->
+<!-- ============================= -->
+
+<script>
+
+const SUPABASE_URL = "https://oolthhsdewchdkuojahl.supabase.co";
+
+const SUPABASE_KEY = "sb_publishable_K9MBG_wuPlWY25Lv5lEpJQ_wph27XsK_wph27Xs";
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+</script>
+
+
+<!-- ============================= -->
+<!-- Main JS -->
+<!-- ============================= -->
 
 <script src="main.js"></script>
 
